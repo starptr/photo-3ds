@@ -5,6 +5,7 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:/opt/devkitpro/devkitARM/bin:$PATH
 
+# Install linkers and debugger dependencies
 RUN apt-get install -y build-essential libtinfo5 libpython2.7
 
 RUN set -eux; \
