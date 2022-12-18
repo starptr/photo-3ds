@@ -1,8 +1,9 @@
 FROM devkitpro/devkitarm
 
+# TODO: replace devkitarm/bin with envvar/bin
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH
+    PATH=/usr/local/cargo/bin:/opt/devkitpro/devkitARM/bin:$PATH
 
 RUN apt-get install -y build-essential
 
@@ -24,5 +25,17 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
+# Needed to build std
+RUN rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+
+# Install cargo 3ds
 RUN git clone https://github.com/rust3ds/cargo-3ds.git /home/cargo-3ds; \
     cargo install --path /home/cargo-3ds;
+
+# Examples
+RUN git clone https://github.com/rust3ds/ctru-rs.git /home/ctru-rs
+
+RUN mkdir -p /home/wkdir
+
+# docker-compose will bind the source
+WORKDIR /home/wkdir/

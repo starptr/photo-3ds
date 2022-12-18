@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  dev:
+    stdin_open: true
+    tty: true
+    build: .
+    ports:
+      - "17491:17491"
+    volumes:
+      - type: bind
+        source: .
+        target: /home/wkdir
